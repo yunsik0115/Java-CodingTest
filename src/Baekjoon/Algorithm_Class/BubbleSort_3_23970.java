@@ -4,7 +4,6 @@ import java.io.*;
 import java.util.StringTokenizer;
 
 public class BubbleSort_3_23970 {
-
     static int[] arr1;
     static int[] arr2;
     public static void main(String[] args) throws IOException {
