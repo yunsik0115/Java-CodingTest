@@ -10,6 +10,8 @@ public class BFS_1_24444 {
     static int r;
     static boolean[] isVisited;
 
+    static LinkedList[] adjList;
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
@@ -23,7 +25,7 @@ public class BFS_1_24444 {
         Arrays.fill(isVisited, false);
         isVisited[0] = true;
 
-        LinkedList[] adjList = new LinkedList[n + 1];
+        adjList = new LinkedList[n + 1];
 
         for (int i = 0; i <= n; i++) {
             adjList[i] = new LinkedList<Integer>();
@@ -34,6 +36,7 @@ public class BFS_1_24444 {
             int u = Integer.parseInt(st.nextToken());
             int v = Integer.parseInt(st.nextToken());
             adjList[u].add(v);
+            adjList[v].add(u);
         }
 
         for (int i = 1; i <= n; i++) {
@@ -42,12 +45,12 @@ public class BFS_1_24444 {
 
         br.close();
 
-        bfs_list(bw, 1, adjList, isVisited);
+        bfs_list(bw, 1, isVisited);
         bw.flush();
         bw.close();
     }
 
-    public static void bfs_list(BufferedWriter bw, int v, LinkedList<Integer>[] adjList, boolean[] visited) throws IOException {
+    public static void bfs_list(BufferedWriter bw, int v, boolean[] visited) throws IOException {
         Queue<Integer> queue = new LinkedList<Integer>();
         visited[v] = true;
         queue.add(v);
@@ -56,14 +59,12 @@ public class BFS_1_24444 {
             v = queue.poll();
             bw.write(v + "\n");
 
-            Iterator<Integer> iter = adjList[v].listIterator();
-            while(iter.hasNext()) {
-                int w = iter.next();
-                if(!visited[w+1]) {
-                    visited[w+1] = true;
-                    queue.add(w);
-                }
-            }
+//            for (w : adjList[v]) {
+//                if (!visited[w + 1]) {
+//                    visited[w + 1] = true;
+//                    queue.add(w);
+//                }
+//            }
         }
 
         for(int i = 0; i<n; i++){
