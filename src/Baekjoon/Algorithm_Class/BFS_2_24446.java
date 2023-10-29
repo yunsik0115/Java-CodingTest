@@ -3,14 +3,13 @@ package Baekjoon.Algorithm_Class;
 import java.io.*;
 import java.util.*;
 
-public class BFS_2_24445 {
-
+public class BFS_2_24446 {
     static int n;
     static int m;
     static int r;
     static boolean[] isVisited;
 
-    static int[] order;
+    static int[] depth;
 
     static Map<Integer, LinkedList<Integer>> graphList;
 
@@ -23,7 +22,7 @@ public class BFS_2_24445 {
         m = Integer.parseInt(st.nextToken());
         r = Integer.parseInt(st.nextToken());
 
-        order = new int[n+1];
+        depth = new int[n + 1];
 
         isVisited = new boolean[n + 1];
         Arrays.fill(isVisited, false);
@@ -35,7 +34,7 @@ public class BFS_2_24445 {
             graphList.put(i, new LinkedList<>());
         }
 
-        for(int i = 0; i<m; i++){
+        for (int i = 0; i < m; i++) {
             st = new StringTokenizer(br.readLine(), " ");
             int u = Integer.parseInt(st.nextToken());
             int v = Integer.parseInt(st.nextToken());
@@ -44,7 +43,7 @@ public class BFS_2_24445 {
             graphList.get(v).add(u);
         }
 
-        for(int i = 1; i<=n; i++){
+        for (int i = 1; i <= n; i++) {
             Collections.sort(graphList.get(i), Collections.reverseOrder());
         }
 
@@ -52,8 +51,9 @@ public class BFS_2_24445 {
 
         bfs_list(bw, r, isVisited);
 
-        for(int i = 1; i <=n; i++){
-            bw.write(Integer.toString(order[i]) + "\n");
+        for (int i = 1; i <= n; i++) {
+            bw.write(Integer.toString(depth[i]));
+            if(i != n) bw.write("\n");
         }
 
         bw.flush();
@@ -64,18 +64,26 @@ public class BFS_2_24445 {
         Queue<Integer> queue = new LinkedList<>();
         int count = 0;
         queue.add(v);
+        depth[v] = count;
         isVisited[v] = true;
 
-        while(!queue.isEmpty()){
+        while (!queue.isEmpty()) {
             v = queue.poll();
+            count++;
             List<Integer> nodes = graphList.get(v);
             for (Integer node : nodes) {
-                if(!visited[node]){
+                if (!visited[node]) {
                     queue.add(node);
+                    depth[node] = count;
                     visited[node] = true;
                 }
             }
-            order[v] = ++count;
+        }
+
+        for(int i=1; i<=n; i++){
+            if(!isVisited[i]){
+                depth[i] = -1;
+            }
         }
     }
 }
