@@ -10,7 +10,9 @@ public class BFS_1_24444 {
     static int r;
     static boolean[] isVisited;
 
-    static LinkedList[] adjList;
+    static int[] order;
+
+    static Map<Integer, LinkedList<Integer>> graphList;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -21,56 +23,59 @@ public class BFS_1_24444 {
         m = Integer.parseInt(st.nextToken());
         r = Integer.parseInt(st.nextToken());
 
+        order = new int[n+1];
+
         isVisited = new boolean[n + 1];
         Arrays.fill(isVisited, false);
         isVisited[0] = true;
 
-        adjList = new LinkedList[n + 1];
+        graphList = new HashMap<>();
 
-        for (int i = 0; i <= n; i++) {
-            adjList[i] = new LinkedList<Integer>();
+        for (int i = 1; i <= n; i++) {
+            graphList.put(i, new LinkedList<>());
         }
 
-        for(int i = 0; i<n; i++){
+        for(int i = 0; i<m; i++){
             st = new StringTokenizer(br.readLine(), " ");
             int u = Integer.parseInt(st.nextToken());
             int v = Integer.parseInt(st.nextToken());
-            adjList[u].add(v);
-            adjList[v].add(u);
+
+            graphList.get(u).add(v);
+            graphList.get(v).add(u);
         }
 
-        for (int i = 1; i <= n; i++) {
-            Collections.sort(adjList[i]);
+        for(int i = 1; i<=n; i++){
+            Collections.sort(graphList.get(i));
         }
 
         br.close();
 
-        bfs_list(bw, 1, isVisited);
+        bfs_list(bw, r, isVisited);
+
+        for(int i = 1; i <=n; i++){
+            bw.write(Integer.toString(order[i]) + "\n");
+        }
+
         bw.flush();
         bw.close();
     }
 
     public static void bfs_list(BufferedWriter bw, int v, boolean[] visited) throws IOException {
-        Queue<Integer> queue = new LinkedList<Integer>();
-        visited[v] = true;
+        Queue<Integer> queue = new LinkedList<>();
+        int count = 0;
         queue.add(v);
+        isVisited[v] = true;
 
-        while(queue.size() != 0) {
+        while(!queue.isEmpty()){
             v = queue.poll();
-            bw.write(v + "\n");
-
-//            for (w : adjList[v]) {
-//                if (!visited[w + 1]) {
-//                    visited[w + 1] = true;
-//                    queue.add(w);
-//                }
-//            }
-        }
-
-        for(int i = 0; i<n; i++){
-            if(!isVisited[i+1]){
-                bw.write("0\n");
+            List<Integer> nodes = graphList.get(v);
+            for (Integer node : nodes) {
+                if(!visited[node]){
+                    queue.add(node);
+                    visited[node] = true;
+                }
             }
+            order[v] = ++count;
         }
     }
 }
