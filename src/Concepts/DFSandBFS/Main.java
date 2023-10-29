@@ -12,7 +12,7 @@ public class Main { // DFS and BFS Simple Implementation
         graph.put(4, Arrays.asList());
         graph.put(5, Arrays.asList(7, 6));
 
-        depthFirstSearch(graph, 1);
+        //depthFirstSearch(graph, 1);
         breadthFirstSearch(graph, 1);
     }
 
@@ -44,8 +44,12 @@ public class Main { // DFS and BFS Simple Implementation
 
         while(!queue.isEmpty()){
             Integer removed = queue.remove();
+            System.out.println("deteciton = " + removed);
             if(!discovered.contains(removed)){
-                System.out.println("removed = " + removed);
+                if(removed == 5) {
+                    System.out.println("searched = " + removed);
+                    return;
+                }
                 discovered.add(removed);
                 if(map.get(removed) == null) {continue;}
                 for(int w : map.get(removed)){
