@@ -3,11 +3,12 @@ package Baekjoon.Algorithm_Class;
 import java.io.*;
 import java.util.*;
 
-public class DFS_2_24480 {
+public class DFS_3_24481 {
     static int n;
     static int m;
     static int r;
     static boolean[] isVisited;
+    static int[] depth;
 
     static int[] order;
 
@@ -22,8 +23,8 @@ public class DFS_2_24480 {
         m = Integer.parseInt(st.nextToken());
         r = Integer.parseInt(st.nextToken());
 
-        order = new int[n + 1];
-
+        depth= new int[n + 1];
+        Arrays.fill(depth,  -1);
         isVisited = new boolean[n + 1];
         Arrays.fill(isVisited, false);
         isVisited[0] = true;
@@ -53,7 +54,7 @@ public class DFS_2_24480 {
         dfs_list(bw, r);
 
         for (int i = 1; i <= n; i++) {
-            bw.write(Integer.toString(order[i]) + "\n");
+            bw.write(Integer.toString(depth[i]) + "\n");
         }
 
         bw.flush();
@@ -66,16 +67,16 @@ public class DFS_2_24480 {
         stack.add(v);
         while (!stack.isEmpty()) {
             v = stack.pop();
-
             if(isVisited[v]) {continue;}
-
             isVisited[v]=true;
-            order[v] = ++count;
+
+            
 
             LinkedList<Integer> nodes = graphList.get(v);
             for (Integer node : nodes) {
                 if(!isVisited[node]) {
                     stack.push(node);
+                    isVisited[node] = true;
                 }
             }
         }
