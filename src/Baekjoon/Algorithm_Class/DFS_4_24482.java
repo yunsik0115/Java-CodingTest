@@ -3,7 +3,7 @@ package Baekjoon.Algorithm_Class;
 import java.io.*;
 import java.util.*;
 
-public class DFS_3_24481 {
+public class DFS_4_24482 {
     static int n;
     static int m;
     static int r;
@@ -45,7 +45,7 @@ public class DFS_3_24481 {
         }
 
         for (int i = 1; i <= n; i++) {
-            Collections.sort(graphList.get(i), Collections.reverseOrder());
+            Collections.sort(graphList.get(i));
         }
 
 
