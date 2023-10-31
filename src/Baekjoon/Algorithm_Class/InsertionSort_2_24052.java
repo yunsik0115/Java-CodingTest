@@ -3,7 +3,8 @@ package Baekjoon.Algorithm_Class;
 import java.io.*;
 import java.util.StringTokenizer;
 
-public class InsertionSort_2_24052 {static int n;
+public class InsertionSort_2_24052 {
+    static int n;
     static int k;
 
     static int count = 0;
