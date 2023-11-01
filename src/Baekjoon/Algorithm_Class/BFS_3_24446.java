@@ -45,7 +45,7 @@ public class BFS_3_24446 {
         }
 
         for (int i = 1; i <= n; i++) {
-            Collections.sort(graphList.get(i), Collections.reverseOrder());
+            Collections.sort(graphList.get(i));
         }
 
         br.close();
@@ -65,23 +65,19 @@ public class BFS_3_24446 {
         Queue<Integer> queue = new LinkedList<>();
         int count = 0;
         queue.add(v);
-        depth[v] = count;
 
         while (!queue.isEmpty()) {
             v = queue.poll();
             visited[v] = true;
+            ++depth[v];
             List<Integer> nodes = graphList.get(v);
             for (Integer node : nodes) {
                 if (!visited[node]) {
                     queue.add(node);
                 }
             }
+            count++;
         }
 
-//        for(int i=1; i<=n; i++){
-//            if(!isVisited[i]){
-//                depth[i] = -1;
-//            }
-//        }
     }
 }
