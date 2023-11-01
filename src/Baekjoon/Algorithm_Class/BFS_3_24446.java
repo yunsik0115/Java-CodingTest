@@ -8,6 +8,7 @@ public class BFS_3_24446 {
     static int m;
     static int r;
     static boolean[] isVisited;
+    static boolean[] isPushed;
 
     static int[] depth;
 
@@ -23,11 +24,11 @@ public class BFS_3_24446 {
         r = Integer.parseInt(st.nextToken());
 
         depth = new int[n + 1];
-
         isVisited = new boolean[n + 1];
+        isPushed = new boolean[n + 1];
         Arrays.fill(isVisited, false);
+        Arrays.fill(isPushed, false);
         Arrays.fill(depth, -1);
-        isVisited[0] = true;
 
         graphList = new HashMap<>();
 
@@ -54,7 +55,7 @@ public class BFS_3_24446 {
 
         for (int i = 1; i <= n; i++) {
             bw.write(Integer.toString(depth[i]));
-            if(i != n) bw.write("\n");
+            bw.write("\n");
         }
 
         bw.flush();
@@ -63,20 +64,22 @@ public class BFS_3_24446 {
 
     public static void bfs_list(BufferedWriter bw, int v, boolean[] visited) throws IOException {
         Queue<Integer> queue = new LinkedList<>();
-        int count = 0;
         queue.add(v);
+        isPushed[v] = true;
+        depth[v] = 0;
+        int count = 0;
 
         while (!queue.isEmpty()) {
             v = queue.poll();
-            visited[v] = true;
-            ++depth[v];
+            isVisited[v] = true;
             List<Integer> nodes = graphList.get(v);
             for (Integer node : nodes) {
                 if (!visited[node]) {
+                    if(!isPushed[node]) depth[node] = depth[v] + 1;
                     queue.add(node);
+                    isPushed[node] = true;
                 }
             }
-            count++;
         }
 
     }
