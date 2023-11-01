@@ -3,7 +3,7 @@ package Baekjoon.Algorithm_Class;
 import java.io.*;
 import java.util.*;
 
-public class BFS_2_24446 {
+public class BFS_3_24446 {
     static int n;
     static int m;
     static int r;
@@ -26,6 +26,7 @@ public class BFS_2_24446 {
 
         isVisited = new boolean[n + 1];
         Arrays.fill(isVisited, false);
+        Arrays.fill(depth, -1);
         isVisited[0] = true;
 
         graphList = new HashMap<>();
@@ -65,25 +66,22 @@ public class BFS_2_24446 {
         int count = 0;
         queue.add(v);
         depth[v] = count;
-        isVisited[v] = true;
 
         while (!queue.isEmpty()) {
             v = queue.poll();
-            count++;
+            visited[v] = true;
             List<Integer> nodes = graphList.get(v);
             for (Integer node : nodes) {
                 if (!visited[node]) {
                     queue.add(node);
-                    depth[node] = count;
-                    visited[node] = true;
                 }
             }
         }
 
-        for(int i=1; i<=n; i++){
-            if(!isVisited[i]){
-                depth[i] = -1;
-            }
-        }
+//        for(int i=1; i<=n; i++){
+//            if(!isVisited[i]){
+//                depth[i] = -1;
+//            }
+//        }
     }
 }
