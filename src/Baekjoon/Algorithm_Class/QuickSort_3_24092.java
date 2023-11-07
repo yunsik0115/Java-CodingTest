@@ -107,6 +107,7 @@ public class QuickSort_3_24092 {
     static boolean compareArray(){
         for(int i = 0; i < n; i++){
             if(target[i] != sortTarget[i]) return false;
+            if(target[n-i-1] != sortTarget[n-i-1]) return false;
         }
         return true;
     }
